@@ -51,7 +51,7 @@ const TravelPlan = ({ route }) => {
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Planning')}>
                     <Text style={styles.buttonText}>Travel Plan</Text>
                 </TouchableOpacity>
 
