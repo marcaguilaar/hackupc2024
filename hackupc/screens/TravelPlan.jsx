@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 //COmponents
 import Header from '../navigation/Header';
+import ActivityItem from '../components/activityItem';
 
 const TravelPlan = ({ route }) => {
     const { city, reason, activities, dates } = route.params;
@@ -51,7 +52,7 @@ const TravelPlan = ({ route }) => {
                 </View>
 
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-                    <Text style={styles.buttonText}>My Plans</Text>
+                    <Text style={styles.buttonText}>Travel Plan</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.sectionTitle}>Sing Up for Team Building!</Text>
@@ -59,7 +60,7 @@ const TravelPlan = ({ route }) => {
                     data={activities}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => 
-                        <Text style={styles.activity}>{item}</Text>
+                        <ActivityItem activity={item} />
                     }
                     ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
                 />
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 15,
     },
     activity: {
         fontSize: 16,
