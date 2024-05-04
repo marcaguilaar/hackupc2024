@@ -37,3 +37,27 @@ class Event(models.Model):
     date = models.DateTimeField()
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     description = models.TextField()
+
+class UserJourney(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
+    date = models.DateField()
+    status = models.CharField(max_length=100)
+
+class JourneyBusiness(models.Model):
+    journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    date = models.DateField()
+    status = models.CharField(max_length=100)
+
+class JourneyCity(models.Model):
+    journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    date = models.DateField()
+    status = models.CharField(max_length=100)
+
+class CityEvent(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    date = models.DateField()
+    status = models.CharField(max_length=100)
