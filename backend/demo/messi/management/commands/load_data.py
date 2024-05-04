@@ -1,16 +1,16 @@
 from django.core.management.base import BaseCommand
 import sys
 import datetime
-# sys.path.append('../../utils')
+sys.path.append('../../utils')
 from messi.utils.dataPreparation import getData
-from messi.utils.localSearch import busqueda_local, solucion_inicial_greedy
 from messi.models import City, User, Journey, UserJourney, JourneyCity
 
 class Command(BaseCommand):
     help = 'Load data from dataPreparation.py into our model'
 
     def handle(self, *args, **options):
-        data_list = getData()
+        filepath = "travel_dataset.csv"
+        data_list = getData(filepath)
         for data in data_list:
             city_name = data['Arrival City']
             city, _ = City.objects.get_or_create(name=city_name)

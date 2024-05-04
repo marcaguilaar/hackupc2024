@@ -1,5 +1,5 @@
 import pandas as pd
-from localSearch import busqueda_local, solucion_inicial_greedy
+from messi.utils.localSearch import busqueda_local, solucion_inicial_greedy
 
 # Función para obtener, preparar y procesar los datos
 def getData(filepath):
