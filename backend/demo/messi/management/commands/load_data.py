@@ -1,8 +1,7 @@
 from django.core.management.base import BaseCommand
-import sys
 import datetime
 from messi.utils.dataPreparation import getData
-from messi.models import City, User, Journey
+from messi.models import City, User, Journey, Business
 
 class Command(BaseCommand):
     help = 'Load data from dataPreparation.py into our model'
@@ -37,10 +36,13 @@ class Command(BaseCommand):
                     }
                     user, created = User.objects.update_or_create(email=traveler['Email'], defaults=user_data)
                     
-                    # Crear o actualizar la relación UserJourney
                     user.journeys.add(journey)
                     
-                    # Crear o actualizar la relación JourneyCity
                     journey.cities.add(city)
+                    
+                    # Crear o actualizar la relación Business
+                    business, _ = Business.objects.get_or_create(name='01')  # Valor predeterminado para la empresa
+
+                    journey.businesses.add(business)
 
         self.stdout.write(self.style.SUCCESS('Successfully loaded data into database'))

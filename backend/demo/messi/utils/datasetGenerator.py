@@ -48,7 +48,8 @@ def generate_data(num_entries=200):
             arrival_city,  # Arrival City
             interest,  # Interests
             email,  # Email
-            password  # Password
+            password,  # Password
+            '01'  # Empresa (nuevo campo)
         ])
 
     return data
@@ -59,7 +60,7 @@ dataset = generate_data()
 # Guardar los datos en un archivo CSV
 with open('travel_dataset.csv', 'w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(['Trip ID', 'Traveller Name', 'Departure Date', 'Return Date', 'Departure City', 'Arrival City', 'Interests', 'Email', 'Password'])
+    writer.writerow(['Trip ID', 'Traveller Name', 'Departure Date', 'Return Date', 'Departure City', 'Arrival City', 'Interests', 'Email', 'Password', 'Empresa'])  # Añade 'Empresa' al encabezado
     writer.writerows(dataset)
 
 print("Dataset generado y guardado en 'travel_dataset.csv'.")
