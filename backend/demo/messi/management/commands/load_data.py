@@ -1,20 +1,60 @@
 from django.core.management.base import BaseCommand
 import datetime
+import requests
+from requests.exceptions import RequestException
 from messi.utils.dataPreparation import getData
-from messi.models import City, User, Journey, Business
+from messi.models import City, User, Journey, Business, Event, Group
 
 class Command(BaseCommand):
-    help = 'Load data from dataPreparation.py into our model'
+    help = 'Load data from dataPreparation.py into our model, including API error handling'
 
     def handle(self, *args, **options):
         filepath = "./messi/utils/travel_dataset.csv"
         resultados_finales = getData(filepath)
+        api_key = '31YeRs4rc6qrFag1dVEEGNljjglE0jEx'  # Asegúrate de usar una clave válida
         
         for ciudad, resultado in resultados_finales:
             city, _ = City.objects.get_or_create(name=ciudad)
             
-            for group in resultado:
-                for traveler in group:
+            for group_data in resultado:
+                departure_dates = [datetime.datetime.strptime(traveler['Departure Date'], '%d/%m/%Y').date() for traveler in group_data]
+                min_common_date = min(departure_dates)
+                max_common_date = max(departure_dates)
+
+                min_date_str = min_common_date.strftime('%Y-%m-%dT00:00:00Z')
+                max_date_str = max_common_date.strftime('%Y-%m-%dT23:59:59Z')
+
+                group_obj, _ = Group.objects.get_or_create(date=min_common_date, city=city)
+
+                interest = group_data[0]['Interests'] if group_data else 'Music'
+
+                url = f'https://app.ticketmaster.com/discovery/v2/events.json?apikey={api_key}&city={city.name}&keyword=${interest}&startDateTime={min_date_str}&endDateTime={max_date_str}&size=10'
+                try:
+                    print(url)
+                    response = requests.get(url)
+                    response.raise_for_status()  # Checks HTTP status codes that are not 200
+                    events_data = response.json().get('_embedded', {}).get('events', [])
+                    if not events_data:
+                        print(f"No events found for {city.name} between {min_date_str} and {max_date_str}.")
+                    else:
+                        for event_info in events_data:
+                            event_date_time = event_info['dates']['start'].get('dateTime', None)
+                            if event_date_time:
+                                event, created = Event.objects.update_or_create(
+                                    name=event_info['name'],
+                                    defaults={
+                                        'date': event_date_time,
+                                        'city': city,
+                                        'description': event_info.get('info', 'No description available')
+                                    }
+                                )
+                                for traveler in group_data:
+                                    user, _ = User.objects.get_or_create(email=traveler['Email'])
+                                    event.participants.add(user)
+                except RequestException as e:
+                    print(f"Error fetching events from Ticketmaster: {e}")
+
+                for traveler in group_data:
                     departure_date = datetime.datetime.strptime(traveler['Departure Date'], '%d/%m/%Y').date()
                     return_date = datetime.datetime.strptime(traveler['Return Date'], '%d/%m/%Y').date()
 
@@ -24,7 +64,7 @@ class Command(BaseCommand):
                             'departureDate': departure_date,
                             'returnDate': return_date,
                             'departureCity': traveler['Departure City'],
-                            'arrivalCity': ciudad  # Use ciudad instead of traveler['Arrival City']
+                            'arrivalCity': ciudad
                         }
                     )
 
@@ -40,9 +80,7 @@ class Command(BaseCommand):
                     
                     journey.cities.add(city)
                     
-                    # Crear o actualizar la relación Business
-                    business, _ = Business.objects.get_or_create(name='01')  # Valor predeterminado para la empresa
-
+                    business, _ = Business.objects.get_or_create(name='01')
                     journey.businesses.add(business)
 
         self.stdout.write(self.style.SUCCESS('Successfully loaded data into database'))

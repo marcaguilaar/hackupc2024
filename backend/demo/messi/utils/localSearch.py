@@ -19,8 +19,14 @@ class Grupo:
                 break
         return fechas_comunes if fechas_comunes else set()
     
+    def __getitem__(self, index):
+        return self.personas[index]
+
     def __iter__(self):
         return iter(self.personas)
+    
+    def __len__(self):
+        return len(self.personas)
 
     def __str__(self):
         return f"Grupo de {len(self.personas)} personas: {self.personas}"
