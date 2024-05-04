@@ -4,7 +4,7 @@ import datetime
 sys.path.append('../../utils')
 print(sys.path)
 from messi.utils.dataPreparation import getData
-from messi.models import City, User, Journey, UserJourney, JourneyCity
+from messi.models import City, User, Journey
 
 class Command(BaseCommand):
     help = 'Load data from dataPreparation.py into our model'
@@ -39,23 +39,9 @@ class Command(BaseCommand):
                 user, created = User.objects.update_or_create(email=traveler['Email'], defaults=user_data)
                 
                 # Crear o actualizar la relación UserJourney
-                user_journey, _ = UserJourney.objects.update_or_create(
-                    user=user,
-                    journey=journey,
-                    defaults={
-                        'date': departure_date,
-                        'status': 'Active'
-                    }
-                )
+                user.journeys.add(journey)
                 
                 # Crear o actualizar la relación JourneyCity
-                journey_city, _ = JourneyCity.objects.update_or_create(
-                    journey=journey,
-                    city=city,
-                    defaults={
-                        'date': departure_date,
-                        'status': 'Planned'
-                    }
-                )
+                journey.cities.add(city)
 
         self.stdout.write(self.style.SUCCESS('Successfully loaded data into database'))
