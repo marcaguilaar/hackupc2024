@@ -43,3 +43,4 @@ class Event(models.Model):
     date = models.DateTimeField()
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     description = models.TextField()
+    participants = models.ManyToManyField(User, related_name='events')
