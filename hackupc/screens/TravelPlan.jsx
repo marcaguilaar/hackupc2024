@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import Header from '../navigation/HeaderBack';
 import ActivityItem from '../components/activityItem';
 
+import { format, parse } from 'date-fns';
+
 const TravelPlan = ({ route }) => {
     const { departureCity, arrivalCity, departureDate, returnDate } = route.params;
     const [imageUrl, setImageUrl] = useState(null);
@@ -30,6 +32,12 @@ const TravelPlan = ({ route }) => {
     }
   };
 
+    let parsedDate1 = parse(departureDate, 'yyyy-MM-dd', new Date());
+    const formattedDate1 = format(parsedDate1, 'MMM-dd');
+
+    let parsedDate2 = parse(returnDate, 'yyyy-MM-dd', new Date());
+    const formattedDate2 = format(parsedDate2, 'MMM-dd');
+
 
     return (
         <SafeAreaView style={styles.outercontainer}>
@@ -39,7 +47,9 @@ const TravelPlan = ({ route }) => {
                 <View style={styles.topRow}>
                     <View style={styles.destinationPod}>
                         <Text style={styles.title}>{arrivalCity}</Text>
-                        <Text style={styles.subtitle}>{departureDate} - {returnDate}</Text>
+                        <Text style={styles.subtitle}>{formattedDate1} - {formattedDate2}</Text>
+                        <Text style={styles.subtitle}>Departure: {departureCity}</Text>
+                        <Text style={styles.subtitle}>Bussiness Trip</Text>
                     </View>
                     <View style={styles.imagePod}>
                         <Image

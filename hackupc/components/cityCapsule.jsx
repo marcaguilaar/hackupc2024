@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { API_KEY } from '../constants/apikey'; //Unsplash API key
 
+import { format, parse } from 'date-fns';
+
 const CityCapsule = ({ departureCity, arrivalCity, departureDate, returnDate }) => {
     const [imageUrl, setImageUrl] = useState(null);
 
@@ -21,12 +23,18 @@ const CityCapsule = ({ departureCity, arrivalCity, departureDate, returnDate }) 
         }
     };
 
+    let parsedDate1 = parse(departureDate, 'yyyy-MM-dd', new Date());
+    const formattedDate1 = format(parsedDate1, 'MMM-dd');
+
+    let parsedDate2 = parse(returnDate, 'yyyy-MM-dd', new Date());
+    const formattedDate2 = format(parsedDate2, 'MMM-dd');
+
     return (
         <View style={styles.container}>
             <ImageBackground source={{ uri: imageUrl }} style={styles.imageBackground}>
                 <View style={styles.overlay}>
                     <Text style={styles.cityName}>{arrivalCity}</Text>
-                    <Text style={styles.dates}>{departureDate} - {returnDate}</Text>
+                    <Text style={styles.dates}>{formattedDate1} - {formattedDate2}</Text>
                 </View>
             </ImageBackground>
         </View>

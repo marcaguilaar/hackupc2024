@@ -12,6 +12,7 @@ import LoginScreen from './screens/LoginScreen';
 import ActivityDetails from './screens/ActivityDetails';
 import Planning from './screens/Planning';
 import SchedulePage from './screens/SchedulePage';
+import EventSearch from './scripts/ticketmaster';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-
+        <Stack.Screen name="EventSearch" component={EventSearch} options={{headerShown: false}} />
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
         <Stack.Screen name="TravelPlan" component={TravelPlan} options={{headerShown: false}}/>
         <Stack.Screen name="ActivityDetails" component={ActivityDetails} options={{headerShown: false}}/>
