@@ -48,7 +48,7 @@ export default function Home({ navigation }) {
         <SafeAreaView style={styles.outercontainer}>
             <Header />
             <View style={styles.innerContainer}>
-                <Text style={styles.myTravel}>Mis Viajes</Text>
+                <Text style={styles.myTravel}>My Trips</Text>
                 <FlatList
                     data={travelData}
                     keyExtractor={(item) => item.id}
