@@ -4,7 +4,7 @@ import { API_KEY } from '../constants/apikey'; //Unsplash API key
 import { useNavigation } from '@react-navigation/native';
 
 //COmponents
-import Header from '../navigation/Header';
+import Header from '../navigation/HeaderBack';
 import ActivityItem from '../components/activityItem';
 
 const TravelPlan = ({ route }) => {
@@ -60,7 +60,9 @@ const TravelPlan = ({ route }) => {
                     data={activities}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => 
-                        <ActivityItem activity={item} />
+                        <TouchableOpacity onPress={() => navigation.navigate('ActivityDetails', { activity: item })}>
+                            <ActivityItem activity={item} />
+                        </TouchableOpacity>
                     }
                     ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
                 />

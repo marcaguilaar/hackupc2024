@@ -9,7 +9,7 @@ const Header = () => {
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate('CheckUser')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                     <Image source={require('../assets/travelperkIcon.jpeg')} style={styles.logo} />
                 </TouchableOpacity>
             </View>
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     container: {
         marginTop: -10,
         maxHeight: 150,
+        height: 60,
         backgroundColor: "#012e99",
         justifyContent: 'center',
         alignItems: 'center',
