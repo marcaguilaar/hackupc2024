@@ -15,7 +15,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.tuempresa.hackupc2024",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCalendarsUsageDescription": "Este app necesita acceso a tu calendario"
+      }
     },
     "android": {
       "adaptiveIcon": {
