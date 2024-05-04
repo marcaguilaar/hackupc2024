@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     },
     topRow: {
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 30,
         height: 150,
         justifyContent: 'space-between',
     },
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 40,
     },
     buttonText: {
         color: '#fff',
