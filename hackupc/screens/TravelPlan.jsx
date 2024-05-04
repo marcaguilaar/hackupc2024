@@ -7,13 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import Header from '../navigation/HeaderBack';
 import ActivityItem from '../components/activityItem';
 
+import { format, parse } from 'date-fns';
+
 const TravelPlan = ({ route }) => {
-    const { city, reason, activities, dates } = route.params;
+    const { departureCity, arrivalCity, departureDate, returnDate } = route.params;
     const [imageUrl, setImageUrl] = useState(null);
 
     const navigation = useNavigation();
 
-    console.log(city, reason, activities, dates);
 
   useEffect(() => {
     fetchImage();
@@ -22,7 +23,7 @@ const TravelPlan = ({ route }) => {
   const fetchImage = async () => {
     try {
       const response = await fetch(
-        `https://api.unsplash.com/photos/random?query=${city}&client_id=${API_KEY}`
+        `https://api.unsplash.com/photos/random?query=${arrivalCity}&client_id=${API_KEY}`
       );
       const data = await response.json();
       setImageUrl(data.urls.regular);
@@ -30,6 +31,12 @@ const TravelPlan = ({ route }) => {
       console.error('Error fetching image:', error);
     }
   };
+
+    let parsedDate1 = parse(departureDate, 'yyyy-MM-dd', new Date());
+    const formattedDate1 = format(parsedDate1, 'MMM-dd');
+
+    let parsedDate2 = parse(returnDate, 'yyyy-MM-dd', new Date());
+    const formattedDate2 = format(parsedDate2, 'MMM-dd');
 
 
     return (
@@ -39,9 +46,10 @@ const TravelPlan = ({ route }) => {
 
                 <View style={styles.topRow}>
                     <View style={styles.destinationPod}>
-                        <Text style={styles.title}>{city}</Text>
-                        <Text style={styles.subtitle}>{dates}</Text>
-                        <Text style={styles.subtitle}>{reason}</Text>
+                        <Text style={styles.title}>{arrivalCity}</Text>
+                        <Text style={styles.subtitle}>{formattedDate1} - {formattedDate2}</Text>
+                        <Text style={styles.subtitle}>Departure: {departureCity}</Text>
+                        <Text style={styles.subtitle}>Bussiness Trip</Text>
                     </View>
                     <View style={styles.imagePod}>
                         <Image
@@ -56,7 +64,12 @@ const TravelPlan = ({ route }) => {
                 </TouchableOpacity>
 
                 <Text style={styles.sectionTitle}>Sing Up for Team Building!</Text>
-                <FlatList
+            </View>
+        </SafeAreaView>
+    );
+};
+
+/* <FlatList
                     data={activities}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => 
@@ -65,11 +78,7 @@ const TravelPlan = ({ route }) => {
                         </TouchableOpacity>
                     }
                     ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-                />
-            </View>
-        </SafeAreaView>
-    );
-};
+                /> */
 
 const styles = StyleSheet.create({
     outercontainer: {
