@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 import sys
 import datetime
 sys.path.append('../../utils')
+print(sys.path)
 from messi.utils.dataPreparation import getData
 from messi.models import City, User, Journey, UserJourney, JourneyCity
 

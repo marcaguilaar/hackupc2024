@@ -7,6 +7,8 @@ class User(models.Model):
     hobbies = models.CharField(max_length=100)
     email = models.EmailField(primary_key=True)
     pwd = models.CharField(max_length=50)
+    journeys = models.ManyToManyField('Journey', related_name='users')
+
 
 class Journey(models.Model):
     #Atributos del viatge
@@ -17,10 +19,14 @@ class Journey(models.Model):
     returnDate = models.DateField()
     departureCity = models.CharField(max_length=100)
     arrivalCity = models.CharField(max_length=100)
+    businesses = models.ManyToManyField('Business', related_name='journeys')
+    cities = models.ManyToManyField('City', through='JourneyCity', related_name='journeys')
 
 class City(models.Model):
     #Atributos de la ciutat
     name = models.CharField(max_length=100)
+    events = models.ManyToManyField('Event', related_name='cities')
+
 
 class Business(models.Model):
     #Atributos de la ciutat
@@ -30,34 +36,10 @@ class Business(models.Model):
 class Planning(models.Model):
     journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
     date = models.DateField()
-    activities = models.TextField()
+    events = models.ManyToManyField('Event', related_name='plannings')
 
 class Event(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateTimeField()
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     description = models.TextField()
-
-class UserJourney(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
-    date = models.DateField()
-    status = models.CharField(max_length=100)
-
-class JourneyBusiness(models.Model):
-    journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
-    business = models.ForeignKey(Business, on_delete=models.CASCADE)
-    date = models.DateField()
-    status = models.CharField(max_length=100)
-
-class JourneyCity(models.Model):
-    journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
-    date = models.DateField()
-    status = models.CharField(max_length=100)
-
-class CityEvent(models.Model):
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    date = models.DateField()
-    status = models.CharField(max_length=100)
