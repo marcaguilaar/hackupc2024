@@ -2,10 +2,7 @@ import React, { useState } from "react";
 
 
 id = null;
-email = "177.traveller@gmail.com";
-
-
-export const TIPUS_IDIOMA = ["Español", "Català", "English"];
+email = null;
 
 export const setUserId = (idd) => {
     id = idd;
@@ -19,6 +16,7 @@ export const userId = () => {
 
 export const setEmail = (mail) => {
     email = mail;
+    console.log("Email:", email);
 }
 
 export const getEmail = () => {

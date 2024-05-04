@@ -1,10 +1,20 @@
 import React from 'react';
-import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
+import { View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
+import { setEmail } from '../constants/user';
+import { useNavigation } from '@react-navigation/native';
 
 //components
 //import Header from "../navigation/Header";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen( ) {
+
+  const navigation = useNavigation();
+
+  const handlePress = (email) => {
+    setEmail(email);
+    navigation.navigate('Home');
+  };
+
   return (
     <SafeAreaView style={styles.outercontainer}>
         <View style={styles.innerContainer}>
@@ -14,13 +24,19 @@ export default function LoginScreen({ navigation }) {
                 style={{ width: 325, height: 100, marginBottom: 100} }
             />
             <View style={styles.box}>
+              <TouchableOpacity onPress={() => handlePress("12.traveller@gmail.com")}>
                 <Text style={styles.boxText}>Demo 1</Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.box}>
-                <Text style={styles.boxText}>Demo 2</Text>
+                <TouchableOpacity onPress={() => handlePress("141.traveller@gmail.com")}>
+                  <Text style={styles.boxText}>Demo 2</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.box}>
-                <Text style={styles.boxText}>Demo 3</Text>
+                <TouchableOpacity onPress={() => handlePress("2.traveller@gmail.com")}>
+                  <Text style={styles.boxText}>Demo 3</Text>
+                </TouchableOpacity>
             </View>
         </View>
     </SafeAreaView>
