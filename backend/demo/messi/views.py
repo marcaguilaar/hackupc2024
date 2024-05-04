@@ -2,4 +2,4 @@ from django.shortcuts import render, HttpResponse
 
 # Create your views here.
 def home(request): 
-    return HttpResponse("AGUILAR PUTERO, URI CARAMELO, RAFA FIFERO Y SANCHO PUTISIMO AMO")
+    return HttpResponse("")
