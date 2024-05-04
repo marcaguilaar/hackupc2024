@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { API_KEY } from '../constants/apikey'; //Unsplash API key
+import { useNavigation } from '@react-navigation/native';
 
 //COmponents
 import Header from '../navigation/Header';
@@ -8,6 +9,8 @@ import Header from '../navigation/Header';
 const TravelPlan = ({ route }) => {
     const { city, reason, activities, dates } = route.params;
     const [imageUrl, setImageUrl] = useState(null);
+
+    const navigation = useNavigation();
 
     console.log(city, reason, activities, dates);
 
