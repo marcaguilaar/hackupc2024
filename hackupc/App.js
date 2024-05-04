@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Pruebas from './screens/Pruebas';
 import Home from './screens/Home';
 import TravelPlan from './screens/TravelPlan';
+import LoginScreen from './screens/LoginScreen'
 
 const Stack = createNativeStackNavigator();
 
