@@ -18,6 +18,9 @@ class Grupo:
             if not fechas_comunes:  # Poda temprana si no hay fechas comunes
                 break
         return fechas_comunes if fechas_comunes else set()
+    
+    def __iter__(self):
+        return iter(self.personas)
 
     def __str__(self):
         return f"Grupo de {len(self.personas)} personas: {self.personas}"

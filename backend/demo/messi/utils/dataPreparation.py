@@ -16,7 +16,6 @@ def getData(filepath):
         resultado_final = busqueda_local(solucion_inicial_greedy(viajes_lista))
         resultados.append((ciudad, resultado_final))
         print("Búsqueda local aplicada.\n")
-
     return resultados
 
 def main():

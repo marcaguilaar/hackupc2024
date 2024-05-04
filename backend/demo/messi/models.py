@@ -20,7 +20,7 @@ class Journey(models.Model):
     departureCity = models.CharField(max_length=100)
     arrivalCity = models.CharField(max_length=100)
     businesses = models.ManyToManyField('Business', related_name='journeys')
-    cities = models.ManyToManyField('City', through='JourneyCity', related_name='journeys')
+    cities = models.ManyToManyField('City', related_name='journeys')
 
 class City(models.Model):
     #Atributos de la ciutat
