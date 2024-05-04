@@ -11,7 +11,7 @@ const ActivityItem = ({ activity }) => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
+        padding: 20,
         backgroundColor: '#c4e7ff',
         borderRadius: 10,
         marginBottom: 5,
