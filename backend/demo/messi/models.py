@@ -44,3 +44,8 @@ class Event(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     description = models.TextField()
     participants = models.ManyToManyField(User, related_name='events')
+
+class Group(models.Model):
+    users = models.ManyToManyField(User, related_name='groups')
+    date = models.DateField()
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
