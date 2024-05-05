@@ -11,6 +11,7 @@ import { format, parse } from 'date-fns';
 
 const TravelPlan = ({ route }) => {
     const { departureCity, arrivalCity, departureDate, returnDate } = route.params;
+    console.log('TravelPlan: ', departureCity, arrivalCity, departureDate, returnDate);
     const [imageUrl, setImageUrl] = useState(null);
     const [activities, setActivities] = useState([]);
     const [error, setError] = useState(null);
@@ -21,33 +22,34 @@ const TravelPlan = ({ route }) => {
     useEffect(() => {
         const fetchJourneys = async () => {
             try {
-                const get = getEmail();
                 console.log('Empezamos a buscar actividades');
-                const response = await fetch(`http://localhost:8000/activities/${arrivalCity}/${departureCity}/${returnDate}`);
+                const response = await fetch(`http://localhost:8000/activities/${arrivalCity}/${departureDate}/${returnDate}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const result = await response.json();
-                console.log('Result: ',result);
+                console.log('Result: ', result);
+                setActivities(result.data);
             } catch (error) {
                 setError(error.message);
             }
         };
+        const fetchImage = async () => {
+          try {
+            const response = await fetch(
+              `https://api.unsplash.com/photos/random?query=${arrivalCity}&client_id=${API_KEY}`
+            );
+            const data = await response.json();
+            setImageUrl(data.urls.regular);
+          } catch (error) {
+            console.error('Error fetching image:', error);
+          }
+        };
         fetchImage();
         fetchJourneys();
-    }, []);
+    }, [arrivalCity, departureCity, returnDate]);
 
-  const fetchImage = async () => {
-    try {
-      const response = await fetch(
-        `https://api.unsplash.com/photos/random?query=${arrivalCity}&client_id=${API_KEY}`
-      );
-      const data = await response.json();
-      setImageUrl(data.urls.regular);
-    } catch (error) {
-      console.error('Error fetching image:', error);
-    }
-  };
+
 
     let parsedDate1 = parse(departureDate, 'yyyy-MM-dd', new Date());
     const formattedDate1 = format(parsedDate1, 'MMM-dd');
@@ -79,8 +81,17 @@ const TravelPlan = ({ route }) => {
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Planning')}>
                     <Text style={styles.buttonText}>Travel Plan</Text>
                 </TouchableOpacity>
-
                 <Text style={styles.sectionTitle}>Sing Up for Team Building!</Text>
+                <FlatList
+                    data={activities}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => 
+                        <TouchableOpacity onPress={() => navigation.navigate('ActivityDetails', { name:item.name, description: item.name, location:item.city, date:item.date})}>
+                            <ActivityItem activity={item.name} />
+                        </TouchableOpacity>
+                    }
+                    ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+                /> 
             </View>
         </SafeAreaView>
     );

@@ -11,7 +11,8 @@ import HeroImage from "../components/heroImage";
 //PopUps
 import SignUpModal from "../popUps/signUpModal";
 
-const ActivityDetails = ({ activity }) => {
+const ActivityDetails = ({ route }) => {
+    const { title, description, location, dateTime } = route.params;
     const navigation = useNavigation();
     const [isPopupVisible, setPopupVisible] = useState(false);
 
@@ -29,9 +30,9 @@ const ActivityDetails = ({ activity }) => {
             <Header />
             <View style={styles.innerContainer}>
                 <HeroImage image={"https://studentaffairs.unl.edu/images/news-article/Football_0.jpg"} />
-                <Text style={styles.title}>Title</Text>
+                <Text style={styles.title}>{title}</Text>
                 <ScrollView style={styles.descriptionRow}>
-                    <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae augue ut nulla dignissim congue. Mauris et fringilla lacus. Proin tempor augue vel felis eleifend, sit amet tristique risus sollicitudin. Integer id metus a libero pulvinar fringilla eget eu arcu. Maecenas vitae neque ut sapien malesuada aliquet. Fusce interdum, ipsum non aliquam ultricies, odio nisi feugiat odio, ac posuere mauris diam ac elit. Morbi sit amet bibendum risus. Duis mollis lorem nec consequat consectetur. Vivamus et purus id elit aliquam sodales. Sed commodo enim id sapien lobortis, eget fermentum ex condimentum. Integer viverra, est nec mattis suscipit, justo est fermentum nulla, a placerat libero ipsum non lacus. Phasellus non nisl libero. Suspendisse potenti. Quisque suscipit mi a orci placerat, vel pulvinar tortor rhoncus. Sed bibendum elit vel dolor tempor, a fermentum velit finibus.</Text>
+                    <Text style={styles.description}>{description}</Text>
                 </ScrollView>
                 <TouchableOpacity style={styles.linkedText}>
                     <Ionicons name="location" size={24} color="#012e99" />
