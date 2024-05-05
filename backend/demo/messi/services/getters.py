@@ -31,3 +31,8 @@ def fetch_event_participants(event_id):
     event = Event.objects.get(id=event_id)
     serializer = UserBasicSerializer(event.participants, many=True)
     return {'data': serializer.data, 'message': 'All participants retrieved successfully'}, status.HTTP_200_OK
+
+def fetch_city_info(city):
+    city = City.objects.get(id=city)
+    serializer = CitySerializer(city)
+    return {'data': serializer.data, 'message': 'City info retrieved successfully'}, status.HTTP_200_OK

@@ -36,3 +36,9 @@ def event_participants(request, event_id):
     result, status_code = fetch_event_participants(event_id)
     return JsonResponse(result, status=status_code)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def city_info(request, city):
+    result, status_code = fetch_city_info(city)
+    return JsonResponse(result, status=status_code)
+

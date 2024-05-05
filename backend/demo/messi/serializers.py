@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Journey, User, Event
+from .models import Journey, User, Event, City
 
 class JourneySerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,3 +22,8 @@ class UserBasicSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'pwd', 'name', 'hobbies']
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = ['name']

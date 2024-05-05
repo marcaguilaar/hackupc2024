@@ -86,7 +86,7 @@ const TravelPlan = ({ route }) => {
                     data={activities}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => 
-                        <TouchableOpacity onPress={() => navigation.navigate('ActivityDetails', { name:item.name, description: item.name, location:item.city, date:item.date})}>
+                        <TouchableOpacity onPress={() => navigation.navigate('ActivityDetails', { name:item.name, description: item.description, location:item.city, date:item.date})}>
                             <ActivityItem activity={item.name} />
                         </TouchableOpacity>
                     }
