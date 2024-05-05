@@ -12,13 +12,30 @@ import { format, parse } from 'date-fns';
 const TravelPlan = ({ route }) => {
     const { departureCity, arrivalCity, departureDate, returnDate } = route.params;
     const [imageUrl, setImageUrl] = useState(null);
+    const [activities, setActivities] = useState([]);
+    const [error, setError] = useState(null);
 
     const navigation = useNavigation();
 
 
-  useEffect(() => {
-    fetchImage();
-  }, []);
+    useEffect(() => {
+        const fetchJourneys = async () => {
+            try {
+                const get = getEmail();
+                console.log('Empezamos a buscar actividades');
+                const response = await fetch(`http://localhost:8000/activities/${arrivalCity}/${departureCity}/${returnDate}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                console.log('Result: ',result);
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+        fetchImage();
+        fetchJourneys();
+    }, []);
 
   const fetchImage = async () => {
     try {

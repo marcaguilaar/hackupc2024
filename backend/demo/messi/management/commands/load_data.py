@@ -24,14 +24,7 @@ class Command(BaseCommand):
 
                 min_date_str = min_common_date.strftime('%Y-%m-%dT00:00:00Z')
                 max_date_str = max_common_date.strftime('%Y-%m-%dT23:59:59Z')
-
-                group_obj, _ = Group.objects.get_or_create(date=min_common_date, city=city)
-
-                city2 = 'New York'
-                interest2 = 'Music'
-
-                startDate = '2024-05-06T00:00:00Z'
-                endDate = '2024-05-15T23:59:59Z'
+                
 
                 interest = group_data[0]['Interests'] if group_data else 'Music'
 
@@ -52,6 +45,7 @@ class Command(BaseCommand):
                                         defaults={
                                             'date': event_date_time,
                                             'description': event_info.get('info', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae augue ut nulla dignissim congue. Mauris et fringilla lacus. Proin tempor augue vel felis eleifend, sit amet tristique risus sollicitudin. Integer id metus a libero pulvinar fringilla eget eu arcu. Maecenas vitae neque ut sapien malesuada aliquet. Fusce interdum, ipsum non aliquam ultricies, odio nisi feugiat odio, ac posuere mauris diam ac elit. Morbi sit amet bibendum risus. Duis mollis lorem nec consequat consectetur. Vivamus et purus id elit aliquam sodales. Sed commodo enim id sapien lobortis, eget fermentum ex condimentum. Integer viverra, est nec mattis suscipit, justo est fermentum nulla, a placerat libero ipsum non lacus. Phasellus non nisl libero. Suspendisse potenti. Quisque suscipit mi a orci placerat, vel pulvinar tortor rhoncus. Sed bibendum elit vel dolor tempor, a fermentum velit finibus.'),
+                                            'city': city,
                                         }
                                     )
                                     print(f"Attempting to create/update event: {event_info['name']}")
