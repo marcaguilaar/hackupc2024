@@ -9,6 +9,7 @@ import { API_KEY } from "../constants/apikey";
 import Header from "../navigation/HeaderBack";
 import HeroImage from "../components/heroImage";
 import { format, parseISO } from 'date-fns';
+import { createEvent } from "../scripts/calendar";
 
 //PopUps
 import SignUpModal from "../popUps/signUpModal";
@@ -65,6 +66,10 @@ const ActivityDetails = ({ route }) => {
     const parsedDate = parseISO(date);
     const formattedDate = format(parsedDate, 'MMMM d, h:mm a');
 
+    const addEventToCalendar = async () => {
+        await createEvent(name, parsedDate, location);
+        Alert.alert('Success', 'Event added to calendar');
+    };
 
     return (
         <SafeAreaView style={styles.outercontainer}>
@@ -81,7 +86,7 @@ const ActivityDetails = ({ route }) => {
                 </TouchableOpacity>
                 <View style={styles.row}>
                     <Text style={styles.dateTime}>{formattedDate}</Text>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={addEventToCalendar}>
                         <Text style={styles.buttonTextS}>Add to calendar</Text>
                     </TouchableOpacity>
                 </View>

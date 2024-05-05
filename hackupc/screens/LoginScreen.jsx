@@ -24,18 +24,13 @@ export default function LoginScreen( ) {
                 style={{ width: 325, height: 100, marginBottom: 100} }
             />
             <View style={styles.box}>
-              <TouchableOpacity onPress={() => handlePress("22.traveller@gmail.com")}>
+              <TouchableOpacity onPress={() => handlePress("99.traveller@gmail.com")}>
                 <Text style={styles.boxText}>Demo 1</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.box}>
-                <TouchableOpacity onPress={() => handlePress("3.traveller@gmail.com")}>
+                <TouchableOpacity onPress={() => handlePress("35.traveller@gmail.com")}>
                   <Text style={styles.boxText}>Demo 2</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.box}>
-                <TouchableOpacity onPress={() => handlePress("72.traveller@gmail.com")}>
-                  <Text style={styles.boxText}>Demo 3</Text>
                 </TouchableOpacity>
             </View>
         </View>
